@@ -4,12 +4,18 @@ const Header = (props) => {
   )
 }
 
+const Part = (props) => {
+  return (
+    <p>{props.part.name} {props.part.exercises}</p>
+  )
+}
+
 const Content = (props) => {
   return (
     <>
       {
-        props.parts.map((part) => (
-          <p>{part.name} {part.exercises}</p>
+        props.parts.map((part, index) => (
+          <Part key={index} part={part} />
         ))
       }
     </>
