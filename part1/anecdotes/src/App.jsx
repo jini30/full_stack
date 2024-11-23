@@ -1,5 +1,41 @@
 import { useState } from 'react';
 
+const MostVoted = ({ anecdotes, votes }) => {
+
+  const findMaximumVotes = () => {
+    let index = 0;
+    let maximumVotes = 0;
+    for(let i = 0; i < votes.length; i++)
+    {
+      if(votes[i] > maximumVotes)
+      {
+        maximumVotes = votes[i];
+        index = i;
+      }
+    }
+    return index;
+  };
+
+  const index = findMaximumVotes();
+  if(votes[index] === 0)
+  {
+    return (
+      <div>
+        <h1>Anecdote with most votes</h1>
+        <p>No anecdotes have been voted yet. Please vote to find the most votes anecdote!</p>
+      </div>
+    );
+  }
+  return (
+    <div>
+      <h1>Anecdote with most votes</h1>
+      <p>{anecdotes[index]}</p>
+      <p>Has {votes[index]} votes</p>
+    </div>
+  );
+
+}
+
 const App = () => {
 
   const anecdotes = [
@@ -14,25 +50,27 @@ const App = () => {
   ];
   
   const [ selected, setSelected ] = useState(0);
-  const [ votes, setVotes ] = useState([0, 0, 0, 0, 0, 0, 0, 0]);
+  const [ votes, setVotes ] = useState(new Array(anecdotes.length).fill(0));
 
   const handleSelected = () => {
     const index = Math.floor(Math.random() * (anecdotes.length));
     setSelected(index);
-  }
+  };
 
   const handleVote = () => {
     const newVotes = [...votes];
     newVotes[selected]++;
     setVotes(newVotes);
-  }
+  };
   
   return (
     <div>
+      <h1>Anecdote with most votes</h1>
       <p>{anecdotes[selected]}</p>
       <p>Has {votes[selected]} votes</p>
       <button onClick={handleVote}>Vote</button>
       <button onClick={handleSelected}>Next anecdote</button>
+      <MostVoted anecdotes={anecdotes} votes={votes} />
     </div>
   );
 
