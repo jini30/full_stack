@@ -1,44 +1,53 @@
 import { useState } from 'react';
 
+const Statistics = ({ good, neutral, bad}) => {
+
+  const calculateAverage = () => {
+    if(good+neutral+bad === 0)
+    {
+      return 0;
+    }
+    return (good - bad) / (good+neutral+bad);
+  };
+
+  const calculatePositive = () => {
+    if(good+neutral+bad === 0)
+    {
+      return 0;
+    }
+    return (good / (good+neutral+bad)) * 100;
+  };
+
+  return (
+    <div>
+        <h1>Statistics</h1>
+        <p>Good {good}</p>
+        <p>Neutral {neutral}</p>
+        <p>Bad {bad}</p>
+        <p>Total {good+neutral+bad}</p>
+        <p>Average {calculateAverage()}</p>
+        <p>Positive {calculatePositive()} %</p>
+      </div>
+  );
+
+}
+
 const App = () => {
   
   const [ good, setGood ] = useState(0);
   const [ neutral, setNeutral ] = useState(0);
   const [ bad, setBad ] = useState(0);
-  const [ total, setTotal ] = useState(0);
 
   const handleGood = () => {
-    const updatedGood = good + 1;
-    setGood(updatedGood);
-    setTotal(updatedGood+neutral+bad);
+    setGood(good+1);
   };
 
   const handleNeutral = () => {
-    const updatedNeutral = neutral + 1;
-    setNeutral(updatedNeutral);
-    setTotal(good+updatedNeutral+bad);
+    setNeutral(neutral+1);
   };
 
   const handleBad = () => {
-    const updatedBad = bad + 1;
-    setBad(updatedBad);
-    setTotal(good+neutral+updatedBad);
-  };
-
-  const calculateAverage = () => {
-    if(total === 0)
-    {
-      return 0;
-    }
-    return (good - bad) / total;
-  };
-
-  const calculatePositive = () => {
-    if(total === 0)
-    {
-      return 0;
-    }
-    return (good / total) * 100;
+    setBad(bad+1);
   };
 
   return (
@@ -49,15 +58,7 @@ const App = () => {
         <button onClick={handleNeutral}>Neutral</button>
         <button onClick={handleBad}>Bad</button>
       </div>
-      <div>
-        <h1>Statistics</h1>
-        <p>Good {good}</p>
-        <p>Neutral {neutral}</p>
-        <p>Bad {bad}</p>
-        <p>Total {total}</p>
-        <p>Average {calculateAverage()}</p>
-        <p>Positive {calculatePositive()} %</p>
-      </div>
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 
