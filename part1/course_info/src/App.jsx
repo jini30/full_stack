@@ -30,13 +30,13 @@ const Content = ({ parts }) => {
 
 const Total = ({ parts }) => {
   
-  let total = 0;
-  parts.forEach((part) => {
-    total += part.exercises
-  });
+  const sum = parts.reduce(
+    (total, val) => total + val.exercises,
+    0
+  );
   
   return (
-    <p><b>Number of exercises {total}</b></p>
+    <p><b>Number of exercises {sum}</b></p>
   );
 
 }
