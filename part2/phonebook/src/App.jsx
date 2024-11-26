@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { getAll, create } from './services/phonebook';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
@@ -12,10 +13,9 @@ const App = () => {
   const [ filterName, setFilterName ] = useState('');
 
   const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
+    getAll()
       .then(response => {
-        setPersons(response.data);
+        setPersons(response);
       });
   };
 
@@ -46,10 +46,9 @@ const App = () => {
         name: newName,
         number: newNumber
       };
-      axios
-        .post('http://localhost:3001/persons', newPerson)
-        .then(response => {
-          setPersons(persons.concat(newPerson));
+      create(newPerson)
+        .then(newPersonObject => {
+          setPersons(persons.concat(newPersonObject));
         });
     }
     setNewName('');
