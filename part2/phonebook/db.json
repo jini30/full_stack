@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "Arto Hellas",
-      "number": "040-123456",
-      "id": "1"
-    },
-    {
       "name": "Ada Lovelace",
       "number": "39-44-5323523",
       "id": "2"
@@ -21,14 +16,9 @@
       "id": "4"
     },
     {
-      "id": "2a65",
+      "id": "29cc",
       "name": "Megha",
       "number": "7016301877"
-    },
-    {
-      "id": "924e",
-      "name": "Nital",
-      "number": "9998981676"
     }
   ]
 }

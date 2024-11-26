@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { getAll, create } from './services/phonebook';
+import { getAll, create, deletePerson } from './services/phonebook';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
@@ -55,6 +55,17 @@ const App = () => {
     setNewNumber('');
   };
 
+  const handleDelete = (id) => {
+    const person = persons.find(p => p.id === id);
+    if(window.confirm(`Do you really want to delete ${person.name}?`))
+    {
+      deletePerson(id)
+      .then(response => {
+        setPersons(persons.filter(person => person.id !== response.id));
+      });
+    }
+  };
+
   const filteredPersons = persons.filter(person => {
     return person.name.toLowerCase().startsWith(filterName.toLowerCase());
   });
@@ -66,7 +77,7 @@ const App = () => {
       <h2>Add a new</h2>
       <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} addPerson={addPerson} />
       <h2>Numbers</h2>
-      <Persons filteredPersons={filteredPersons} />
+      <Persons filteredPersons={filteredPersons} handleDelete={handleDelete} />
     </div>
   );
 
