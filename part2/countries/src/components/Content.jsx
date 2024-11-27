@@ -10,7 +10,7 @@ const Content = ({ list }) => {
       axios
         .get(`https://studies.cs.helsinki.fi/restcountries/api/name/${country}`)
         .then(response => {
-          setSelectedCountry(response.data)
+          setSelectedCountry(response.data);
         });
     }
   
