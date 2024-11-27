@@ -3,6 +3,7 @@ import { getAll, create, deletePerson, update } from './services/phonebook';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
+import Notification from './components/Notification';
 
 const App = () => {
   
@@ -10,6 +11,8 @@ const App = () => {
   const [ newName, setNewName ] = useState('');
   const [ newNumber, setNewNumber ] = useState('');
   const [ filterName, setFilterName ] = useState('');
+  const [ errorMessage, setErrorMessage ] = useState(null);
+  const [ errorType, setErrorType ] = useState(null);
 
   const hook = () => {
     getAll()
@@ -44,6 +47,11 @@ const App = () => {
         const updatedPerson = {...originalPerson, number: newNumber};
         update(id, updatedPerson)
           .then(changedPerson => {
+            setErrorMessage(`Updated ${newName}`);
+            setErrorType('changed');
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
             setPersons(persons.map(p => p.id === id ? changedPerson : p));
           });
       }
@@ -56,6 +64,11 @@ const App = () => {
       };
       create(newPerson)
         .then(newPersonObject => {
+          setErrorMessage(`Added ${newName}`);
+          setErrorType('added');
+          setTimeout(() => {
+            setErrorMessage(null);
+          }, 5000);
           setPersons(persons.concat(newPersonObject));
         });
     }
@@ -69,6 +82,11 @@ const App = () => {
     {
       deletePerson(id)
       .then(response => {
+        setErrorMessage(`Deleted ${person.name}`);
+        setErrorType('deleted');
+        setTimeout(() => {
+          setErrorMessage(null);
+        }, 5000);
         setPersons(persons.filter(person => person.id !== response.id));
       });
     }
@@ -81,6 +99,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={errorMessage} type={errorType} />
       <Filter filterName={filterName} handleFilterChange={handleFilterChange} />
       <h2>Add a new</h2>
       <PersonForm newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} addPerson={addPerson} />

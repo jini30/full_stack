@@ -1,0 +1,38 @@
+.added
+{
+    color: rgb(52, 242, 52);
+    background-color: gray;
+    font-size: 20px;
+    border-style: solid;
+    border-color: rgb(52, 242, 52);
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.changed
+{
+    color: yellow;
+    background-color: gray;
+    font-size: 20px;
+    border-style: solid;
+    border-color: yellow;
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.deleted
+{
+    color: rgb(241, 127, 127);
+    background-color: gray;
+    font-size: 20px;
+    border-style: solid;
+    border-color: rgb(241, 127, 127);
+    border-radius: 5px;
+    border-width: 2px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
