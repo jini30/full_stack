@@ -1,29 +1,5 @@
-const Display = ({ list }) => {
-
-    if(list === null)
-    {
-      return null;
-    }
-    
-    if(list.length > 10)
-    {
-      return (
-        <p>Too many matches, specify another filter.</p>
-      );
-    }
-    else if(list.length > 1)
-    {
-      return (
-        <>
-          {list.map((country, index) => <p key={index}>{country.name.common}</p>)}
-        </>
-      )
-    }
-    else if(list.length == 1)
-    {
-      const country = list[0];
-      
-      return (
+const Display = ({ country }) => {
+    return (
         <div>
           <h1>{country.name.common}</h1>
           <p>Capital: {country.capital.reduce((total, curr) =>  total + " " + curr, "")}</p>
@@ -34,11 +10,7 @@ const Display = ({ list }) => {
           </ul>
           <img src={country.flags.png} alt={country.flags.alt} />
         </div>
-      )
-    }
-    
-    return null;
-  
-  }
+    );
+}
 
 export default Display;
