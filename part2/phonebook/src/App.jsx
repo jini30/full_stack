@@ -53,6 +53,13 @@ const App = () => {
               setErrorMessage(null);
             }, 5000);
             setPersons(persons.map(p => p.id === id ? changedPerson : p));
+          })
+          .catch(err => {
+            setErrorMessage(`Information of ${newName} has already been removed from the server.`);
+            setErrorType('deleted');
+            setTimeout(() => {
+              setErrorMessage(null);
+            }, 5000);
           });
       }
     }
