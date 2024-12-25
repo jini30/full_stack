@@ -2,6 +2,8 @@ const express = require('express');
 
 const app = express();
 
+app.use(express.json());
+
 let persons = [
     {
         'id': '1',
@@ -46,6 +48,39 @@ app.get('/info', (request, response) => {
     const time = new Date();
     response.send(`<p>Phonebook has info for ${persons.length} people</p><p>${time}</p>`);
 });
+
+const generateId = () => {
+    const id = String(Math.floor(Math.random() * 1000) + 1);
+    const person = persons.find(p => p.id === id);
+    if(!person)
+    {
+        return id;
+    }
+    return generateId();
+}
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body;
+    if(!body.name)
+    {
+        return response.status(400).json({
+            error: 'Name is missing'
+        });
+    }
+    if(!body.number)
+    {
+        return response.status(400).json({
+            error: 'Number is missing'
+        });
+    }
+    const person = {
+        id: generateId(),
+        name: body.name,
+        number: body.number
+    };
+    persons = persons.concat(person);
+    response.json(person);
+})
 
 app.delete('/api/persons/:id', (request, response) => {
     const id = request.params.id;
